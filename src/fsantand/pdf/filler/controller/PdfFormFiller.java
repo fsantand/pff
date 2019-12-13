@@ -39,11 +39,23 @@ public class PdfFormFiller {
         }
     }
 
+    /**
+     * Saves the PDP file to certain path.
+     *
+     * @param view Major distinctive for naming the file
+     * @param distinctive Minor distinctive for naming the file
+     * @throws IOException El archivo no está abierto
+     */
     public void savePDF(String view, String distinctive) throws IOException{
         String filename = view + " - " +LocalDate.now() + "-" + distinctive+ ".pdf";
         this.document.save(filename);
     }
 
+    /**
+     * Closes the document
+     *
+     * @throws IOException El archivo no está abierto
+     */
     public void closeDocument() throws IOException{
         this.document.close();
     }

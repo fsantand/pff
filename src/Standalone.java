@@ -10,13 +10,17 @@ import java.util.List;
 
 public class Standalone {
     public static void main(String[] args) throws IOException, SQLException {
-        //Pruebas
+        //Tests
         ConnectionHandler connectionHandler = ConnectionHandler.getInstance();
-        String formulario = "C:\\Users\\Trabajo\\Documents\\Portfolio\\formulario_prueba.pdf";
+        String formulario = "C:\\Users\\Trabajo\\Documents\\Portfolio\\formulario_prueba.pdf"; // You can try with your own files
         PdfFormFiller pdf = new PdfFormFiller(formulario);
         List<TestClass> datos = new ArrayList<>();
 
-        connectionHandler.conectar();
+        connectionHandler.setCredentials(
+                "localhost:5432/pdfFiller",
+                "pdfappAdmin",
+                "root");
+        connectionHandler.connect();
         ResultSet rs = connectionHandler.getResultSet("SELECT * FROM form;");
 
         while(rs.next()){

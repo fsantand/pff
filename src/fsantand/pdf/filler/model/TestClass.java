@@ -3,21 +3,16 @@ package fsantand.pdf.filler.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Just a bean test class
+ */
 public class TestClass implements PdfFillable {
     private int id;
     private String nombre;
     private long cantidad;
     private LocalDate fechaEntrega;
-
-    public TestClass(int id, String nombre, long cantidad, LocalDate fechaEntrega) {
-        this.id = id;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.fechaEntrega = fechaEntrega;
-    }
 
     public TestClass(ResultSet rs) throws SQLException {
         this.id = rs.getInt("id");

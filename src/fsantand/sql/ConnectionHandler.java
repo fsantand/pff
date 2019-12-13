@@ -1,9 +1,11 @@
 package fsantand.sql;
 
-
-import javax.xml.transform.Result;
 import java.sql.*;
 
+/**
+ * Class that handles all the connections to the database.
+ * Implemented on PostgreSQL
+ */
 public class ConnectionHandler {
     private static ConnectionHandler ourInstance = new ConnectionHandler();
 
@@ -17,12 +19,22 @@ public class ConnectionHandler {
     private String password;
 
     private ConnectionHandler() {
-        database = "localhost:5432/pdfFiller";
-        username = "pdfappAdmin";
-        password = "root";
     }
 
-    public void conectar(){
+    /**
+     * Set the credentials for accessing the database
+     *
+     * @param databaseURL The database location (Path or URL)
+     * @param username Database's username
+     * @param password Database user's password.
+     */
+    public void setCredentials(String databaseURL, String username, String password){
+        this.database = databaseURL;
+        this.username = username;
+        this.password = password;
+    }
+
+    public void connect(){
         boolean estaConectado = false;
         try {
             Class.forName("org.postgresql.Driver");
@@ -40,7 +52,7 @@ public class ConnectionHandler {
         System.out.println(estaConectado ? "Conectado exitosamente" : "No se ha conectado");
     }
 
-    public void cerrarConexion(){
+    public void closeConection(){
         if (connection != null) {
             try {
                 connection.close();
@@ -51,24 +63,16 @@ public class ConnectionHandler {
         }
     }
 
-    public boolean ingresarSQL(String consultaSQL){
+    /**
+     * Method that handles the data needed for the PdfFormFiller
+     * @param sqlQuery Query to the database
+     * @return A ResultSet with all the data
+     */
+    public ResultSet getResultSet(String sqlQuery){
         try {
-            if (connection.isClosed()) conectar();
+            if (connection.isClosed()) connect();
             Statement stmt = connection.createStatement();
-            stmt.execute(consultaSQL);
-            return true;
-        } catch (SQLException e)
-        {
-            System.out.println("No se pudo acceder a la base de datos. Error "+ e.getErrorCode());
-            return false;
-        }
-    }
-
-    public ResultSet getResultSet(String consultaSQL){
-        try {
-            if (connection.isClosed()) conectar();
-            Statement stmt = connection.createStatement();
-            stmt.execute(consultaSQL);
+            stmt.execute(sqlQuery);
             return stmt.getResultSet();
         } catch (SQLException e)
         {
