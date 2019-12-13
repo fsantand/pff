@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Standalone {
@@ -26,9 +25,9 @@ public class Standalone {
 
         for (TestClass dato: datos) {
             pdf.fillPDF(dato.toFormData());
-            pdf.guardarPDF("Printlab", Integer.toString(dato.getId()));
+            pdf.savePDF("Printlab", Integer.toString(dato.getId()));
         }
 
-        pdf.cerrarDocumento();
+        pdf.closeDocument();
     }
 }
